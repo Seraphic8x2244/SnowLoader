@@ -1,26 +1,38 @@
-name: Build
+name: Build Windows x64
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: [dev]
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest
-
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure CMake
-        run: cmake -B build -G "Visual Studio 17 2022" -A x64
+      - name: Configure CMake (x64)
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 
-      - name: Build
+      - name: Build Release
         run: cmake --build build --config Release --parallel
 
-      - name: Upload artifacts
+      - name: Verify deployable files
+        shell: pwsh
+        run: |
+          $required = @(
+            "assets/SnowLoader.asi",
+            "assets/SnowLoader/imgui.dll",
+            "assets/SnowLoader/scripts/speed.dll"
+          )
+          foreach ($file in $required) {
+            if (-not (Test-Path $file)) { throw "Missing build output: $file" }
+          }
+
+      - name: Upload installable files
         uses: actions/upload-artifact@v4
         with:
-          name: SnowLoader
+          name: SnowLoader-Windows-x64
           path: assets/
+          if-no-files-found: error
+          retention-days: 30
