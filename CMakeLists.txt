@@ -82,7 +82,7 @@ endif()
 # === Auto-discovery and build of scripts ===
 macro(add_script_library SCRIPT_NAME)
     # Discover all .cpp files in the script directory
-    file(GLOB CONFIGURE_DEPENDS SCRIPT_SOURCES "${CMAKE_SOURCE_DIR}/scripts/${SCRIPT_NAME}/*.cpp")
+    file(GLOB SCRIPT_SOURCES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/scripts/${SCRIPT_NAME}/*.cpp")
     
     if(NOT SCRIPT_SOURCES)
         message(WARNING "No .cpp files found in scripts/${SCRIPT_NAME}")
@@ -109,7 +109,7 @@ macro(add_script_library SCRIPT_NAME)
 endmacro()
 
 # Auto-discover and build all scripts
-file(GLOB CONFIGURE_DEPENDS SCRIPT_DIRS "${CMAKE_SOURCE_DIR}/scripts/*/")
+file(GLOB SCRIPT_DIRS CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/scripts/*/")
 foreach(SCRIPT_DIR ${SCRIPT_DIRS})
     get_filename_component(SCRIPT_NAME ${SCRIPT_DIR} NAME)
     # Skip if it doesn't look like a script directory (e.g., CMakeLists.txt, .gitkeep)
