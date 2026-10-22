@@ -158,3 +158,7 @@ SNOWLOADER_DEFINE_SCRIPT(MyScript)
 ## License
 
 This project is provided as-is for educational and modding purposes.
+
+## Fork's Windows build
+
+On the `dev` branch, GitHub Actions builds a Windows x64 Release and uploads the contents of `assets/` as `SnowLoader-Windows-x64`. Download the artifact from the successful workflow run's page. This build is not verified until the Actions job completes successfully.
