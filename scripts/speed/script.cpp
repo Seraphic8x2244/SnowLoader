@@ -183,7 +183,7 @@ namespace
         }
 
     private:
-        static constexpr uintptr_t SPEED_ADDRESS = 0x2A856CC;
+        static constexpr uintptr_t SPEED_ADDRESS = 0x2A8FA2C;
 
         void HandleWindowDragging()
         {
